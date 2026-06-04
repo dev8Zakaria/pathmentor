@@ -1,0 +1,28 @@
+{
+  "name": "pathmentor-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PathMentor AI monorepo: React frontend, Express backend, MongoDB, Redis and Neo4j.",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace backend",
+    "dev:backend": "npm run dev --workspace backend",
+    "dev:frontend": "npm run dev --workspace frontend",
+    "serve:frontend": "npm run serve --workspace frontend",
+    "build": "npm run build --workspace backend && npm run build --workspace frontend",
+    "seed": "npm run seed --workspace backend",
+    "lint": "npm run lint --workspace frontend",
+    "typecheck": "npm run typecheck --workspace backend && npm run typecheck --workspace frontend"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "framer-motion": "^12.40.0",
+    "gsap": "^3.15.0",
+    "uipro-cli": "^2.2.3"
+  }
+}
