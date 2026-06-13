@@ -1,3 +1,4 @@
+import { Annotation, END, START, StateGraph } from "@langchain/langgraph";
 import { Types } from "mongoose";
 import { Profile } from "../users/profile.model";
 import { CareerGoal } from "../career-goals/careerGoal.model";
@@ -15,6 +16,12 @@ import { generateGeminiJson, generateGeminiText, isGeminiEnabled } from "./gemin
 type CareerId = keyof typeof skillGraph;
 type AiProvider = "gemini" | "mock";
 type MentorAnswerResult = { answer: string; provider: AiProvider };
+type RoadmapGenerationResult = {
+  roadmap: Awaited<ReturnType<typeof Roadmap.create>>;
+  aiSummary: string;
+  recommendedProjects: unknown[];
+  aiProvider: AiProvider;
+};
 
 type GeminiRoadmapDraft = {
   summary: string;
@@ -34,6 +41,22 @@ type GeminiRoadmapDraft = {
     }>;
   }>;
 };
+
+const RoadmapWorkflowState = Annotation.Root({
+  userId: Annotation<string>,
+  profile: Annotation<any>,
+  careerGoal: Annotation<any>,
+  latestAttempt: Annotation<any>,
+  detectedLevel: Annotation<string>,
+  missingSkills: Annotation<string[]>,
+  resources: Annotation<any[]>,
+  projects: Annotation<any[]>,
+  summary: Annotation<string>,
+  phases: Annotation<RoadmapPhase[]>,
+  aiProvider: Annotation<AiProvider>,
+  roadmap: Annotation<any>,
+  recommendedProjects: Annotation<any[]>
+});
 
 function normalizeKnown(technologies: string[]) {
   return new Set(technologies.map((item) => item.toLowerCase().trim()));
@@ -243,6 +266,117 @@ JSON shape:
   return normalizeGeminiRoadmap(draft);
 }
 
+function createRoadmapGenerationWorkflow() {
+  return new StateGraph(RoadmapWorkflowState)
+    .addNode("load_context", async (state: typeof RoadmapWorkflowState.State) => {
+      const profile = await Profile.findOne({ userId: state.userId });
+      if (!profile?.targetCareerId) {
+        throw new AppError(400, "Profile and target career are required before roadmap generation");
+      }
+
+      const careerGoal = await CareerGoal.findById(profile.targetCareerId);
+      if (!careerGoal) throw new AppError(404, "Career goal not found");
+
+      const latestAttempt = await QuizAttempt.findOne({ userId: state.userId, careerGoalId: profile.targetCareerId }).sort({ completedAt: -1 });
+      if (!latestAttempt) throw new AppError(400, "Quiz is required before roadmap generation");
+
+      return { profile, careerGoal, latestAttempt };
+    })
+    .addNode("analyze_gaps", async (state: typeof RoadmapWorkflowState.State) => {
+      const missingSkills = detectMissingSkills(
+        state.profile.targetCareerId,
+        state.profile.knownTechnologies,
+        state.latestAttempt.weaknesses
+      );
+      const [resources, projects] = await Promise.all([
+        Resource.find({ skillTags: { $in: missingSkills } }).lean(),
+        Project.find({ skillTags: { $in: missingSkills } }).lean()
+      ]);
+      const detectedLevel = state.latestAttempt.score >= 75 ? "Advanced" : state.latestAttempt.score >= 45 ? "Intermediate" : "Beginner";
+      const summary = `Profile ${detectedLevel}. Strengths: ${state.latestAttempt.strengths.join(", ") || "to confirm"}. Priority gaps: ${missingSkills.slice(0, 5).join(", ") || "portfolio depth and interview readiness"}. This roadmap is designed to produce reviewable evidence, not just passive learning.`;
+      const phases = buildRoadmapPhases(missingSkills, state.profile.weeklyStudyHours, state.careerGoal.name);
+
+      return {
+        detectedLevel,
+        missingSkills,
+        resources,
+        projects,
+        summary,
+        phases,
+        aiProvider: "mock" as AiProvider
+      };
+    })
+    .addNode("generate_ai_draft", async (state: typeof RoadmapWorkflowState.State) => {
+      if (!isGeminiEnabled()) return {};
+
+      try {
+        const geminiRoadmap = await generateGeminiRoadmap({
+          careerName: state.careerGoal.name,
+          careerDescription: state.careerGoal.description,
+          detectedLevel: state.detectedLevel,
+          score: state.latestAttempt.score,
+          strengths: state.latestAttempt.strengths,
+          weaknesses: state.latestAttempt.weaknesses,
+          missingSkills: state.missingSkills,
+          knownTechnologies: state.profile.knownTechnologies,
+          completedProjects: state.profile.completedProjects,
+          weeklyStudyHours: state.profile.weeklyStudyHours
+        });
+
+        if (!geminiRoadmap) return {};
+
+        return {
+          summary: geminiRoadmap.summary,
+          phases: geminiRoadmap.phases,
+          aiProvider: "gemini" as AiProvider
+        };
+      } catch {
+        return { aiProvider: "mock" as AiProvider };
+      }
+    })
+    .addNode("persist_roadmap", async (state: typeof RoadmapWorkflowState.State) => {
+      const phases = attachResourcesToTasks(state.phases, state.resources);
+
+      await Roadmap.updateMany({ userId: state.userId, status: "ACTIVE" }, { $set: { status: "ARCHIVED" } });
+      const roadmap = await Roadmap.create({
+        userId: state.userId,
+        careerGoalId: state.profile.targetCareerId,
+        title: `Roadmap ${state.careerGoal.name} - ${state.careerGoal.estimatedDurationWeeks} weeks`,
+        summary: state.summary,
+        phases
+      });
+
+      await AiProfile.findOneAndUpdate(
+        { userId: state.userId, careerGoalId: state.profile.targetCareerId },
+        {
+          userId: state.userId,
+          careerGoalId: state.profile.targetCareerId,
+          summary: state.summary,
+          detectedLevel: state.detectedLevel,
+          strengths: state.latestAttempt.strengths,
+          gaps: state.missingSkills,
+          recommendedFocus: state.missingSkills.slice(0, 5),
+          generatedAt: new Date()
+        },
+        { upsert: true, new: true }
+      );
+
+      await safeRedisSet(`roadmap:cache:user:${state.userId}`, JSON.stringify(roadmap), 60 * 10);
+
+      return {
+        phases,
+        roadmap,
+        recommendedProjects: state.projects.slice(0, 3)
+      };
+    })
+    .addEdge(START, "load_context")
+    .addEdge("load_context", "analyze_gaps")
+    .addEdge("analyze_gaps", "generate_ai_draft")
+    .addEdge("generate_ai_draft", "persist_roadmap")
+    .addEdge("persist_roadmap", END)
+    .compile();
+}
+
 function buildFallbackMentorAnswer(input: {
   careerName?: string;
   focus: string;
@@ -266,80 +400,14 @@ function formatMentorHistory(history: ConversationMessage[]) {
 }
 
 export async function generateRoadmapForUser(userId: string) {
-  const profile = await Profile.findOne({ userId });
-  if (!profile?.targetCareerId) {
-    throw new AppError(400, "Profile and target career are required before roadmap generation");
-  }
-
-  const careerGoal = await CareerGoal.findById(profile.targetCareerId);
-  if (!careerGoal) throw new AppError(404, "Career goal not found");
-
-  const latestAttempt = await QuizAttempt.findOne({ userId, careerGoalId: profile.targetCareerId }).sort({ completedAt: -1 });
-  if (!latestAttempt) throw new AppError(400, "Quiz is required before roadmap generation");
-
-  const missingSkills = detectMissingSkills(profile.targetCareerId, profile.knownTechnologies, latestAttempt.weaknesses);
-  const resources = await Resource.find({ skillTags: { $in: missingSkills } }).lean();
-  const projects = await Project.find({ skillTags: { $in: missingSkills } }).lean();
-
-  const detectedLevel = latestAttempt.score >= 75 ? "Advanced" : latestAttempt.score >= 45 ? "Intermediate" : "Beginner";
-  let aiProvider: AiProvider = "mock";
-  let summary = `Profile ${detectedLevel}. Strengths: ${latestAttempt.strengths.join(", ") || "to confirm"}. Priority gaps: ${missingSkills.slice(0, 5).join(", ") || "portfolio depth and interview readiness"}. This roadmap is designed to produce reviewable evidence, not just passive learning.`;
-  let phases = buildRoadmapPhases(missingSkills, profile.weeklyStudyHours, careerGoal.name);
-
-  if (isGeminiEnabled()) {
-    try {
-      const geminiRoadmap = await generateGeminiRoadmap({
-        careerName: careerGoal.name,
-        careerDescription: careerGoal.description,
-        detectedLevel,
-        score: latestAttempt.score,
-        strengths: latestAttempt.strengths,
-        weaknesses: latestAttempt.weaknesses,
-        missingSkills,
-        knownTechnologies: profile.knownTechnologies,
-        completedProjects: profile.completedProjects,
-        weeklyStudyHours: profile.weeklyStudyHours
-      });
-
-      if (geminiRoadmap) {
-        summary = geminiRoadmap.summary;
-        phases = geminiRoadmap.phases;
-        aiProvider = "gemini";
-      }
-    } catch {
-      aiProvider = "mock";
-    }
-  }
-
-  phases = attachResourcesToTasks(phases, resources);
-
-  await Roadmap.updateMany({ userId, status: "ACTIVE" }, { $set: { status: "ARCHIVED" } });
-  const roadmap = await Roadmap.create({
-    userId,
-    careerGoalId: profile.targetCareerId,
-    title: `Roadmap ${careerGoal.name} - ${careerGoal.estimatedDurationWeeks} weeks`,
-    summary,
-    phases
-  });
-
-  await AiProfile.findOneAndUpdate(
-    { userId, careerGoalId: profile.targetCareerId },
-    {
-      userId,
-      careerGoalId: profile.targetCareerId,
-      summary,
-      detectedLevel,
-      strengths: latestAttempt.strengths,
-      gaps: missingSkills,
-      recommendedFocus: missingSkills.slice(0, 5),
-      generatedAt: new Date()
-    },
-    { upsert: true, new: true }
-  );
-
-  await safeRedisSet(`roadmap:cache:user:${userId}`, JSON.stringify(roadmap), 60 * 10);
-
-  return { roadmap, aiSummary: summary, recommendedProjects: projects.slice(0, 3), aiProvider };
+  const workflow = createRoadmapGenerationWorkflow();
+  const result = await workflow.invoke({ userId });
+  return {
+    roadmap: result.roadmap,
+    aiSummary: result.summary,
+    recommendedProjects: result.recommendedProjects,
+    aiProvider: result.aiProvider
+  } satisfies RoadmapGenerationResult;
 }
 
 export async function getCachedOrActiveRoadmap(userId: string) {

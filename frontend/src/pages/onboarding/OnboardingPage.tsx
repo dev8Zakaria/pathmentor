@@ -67,7 +67,7 @@ export function OnboardingPage() {
       <motion.section initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="panel p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <p className="flex items-center gap-2 text-sm font-bold uppercase text-indigo-700">
+            <p className="mono-space flex items-center gap-2 text-sm font-bold uppercase text-[#FF5C00]">
               <Compass size={16} />
               Career targeting
             </p>
@@ -77,15 +77,15 @@ export function OnboardingPage() {
             </p>
           </div>
           {selectedCareer && (
-            <div className="rounded-2xl border border-indigo-200 bg-indigo-50 px-4 py-3 text-sm">
-              <p className="font-black text-indigo-900">Selected target</p>
-              <p className="text-indigo-700">{selectedCareer.name}</p>
+            <div className="rounded-[4px] border-2 border-[#666666] bg-[#FF5C00]/10 px-4 py-3 text-sm">
+              <p className="font-black text-[#111827]">Selected target</p>
+              <p className="text-[#E55300]">{selectedCareer.name}</p>
             </div>
           )}
         </div>
       </motion.section>
 
-      {message && <p className="rounded-xl bg-emerald-50 p-3 text-sm font-bold text-emerald-700">{message}</p>}
+      {message && <p className="rounded-[4px] border border-[#FF5C00]/30 bg-[#FF5C00]/10 p-3 text-sm font-bold text-[#E55300]">{message}</p>}
 
       <section className="grid gap-5 xl:grid-cols-[0.78fr_1.22fr]">
         <div className="panel p-5">
@@ -141,14 +141,14 @@ export function OnboardingPage() {
                   key={career._id}
                   type="button"
                   onClick={() => setProfile({ ...profile, targetCareerId: career._id })}
-                  className={`interactive-card rounded-2xl border p-4 text-left ${selected ? "border-indigo-500 bg-indigo-50" : "border-slate-200 bg-white"}`}
+                  className={`interactive-card rounded-[4px] border p-4 text-left ${selected ? "border-[#666666] bg-[#FF5C00]/10" : "border-slate-200 bg-white"}`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <p className="font-black text-ink">{career.name}</p>
                       <p className="mt-2 text-sm leading-6 text-slate-600">{career.description}</p>
                     </div>
-                    {selected ? <CheckCircle2 className="shrink-0 text-indigo-600" size={22} /> : <StatusPill value={career.difficulty} />}
+                    {selected ? <CheckCircle2 className="shrink-0 text-[#FF5C00]" size={22} /> : <StatusPill value={career.difficulty} />}
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {career.domains.map((domain) => (
@@ -171,7 +171,7 @@ export function OnboardingPage() {
         </div>
       </section>
 
-      <button className="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-slate-800">
+      <button className="mono-space inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white shadow-[4px_4px_0_rgba(102,102,102,0.18)] transition-colors hover:bg-[#E55300]">
         <Save size={16} />
         Save target and continue
         <ArrowRight size={16} />

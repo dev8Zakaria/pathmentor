@@ -47,7 +47,7 @@ export function QuizPage() {
   return (
     <div className="space-y-6">
       <section className="panel p-6">
-        <p className="flex items-center gap-2 text-sm font-bold uppercase text-indigo-700">
+        <p className="mono-space flex items-center gap-2 text-sm font-bold uppercase text-[#FF5C00]">
           <GraduationCap size={16} />
           Senior CS diagnostic
         </p>
@@ -56,7 +56,7 @@ export function QuizPage() {
           These questions test engineering judgment, not memorized slogans. Choose the answer you would defend in a code review.
         </p>
         <div className="mt-5 h-3 overflow-hidden rounded-full bg-slate-100">
-          <motion.div className="h-full rounded-full bg-gradient-to-r from-indigo-600 to-emerald-500" animate={{ width: `${progress}%` }} />
+          <motion.div className="h-full rounded-full bg-gradient-to-r from-[#FF5C00] to-[#E55300]" animate={{ width: `${progress}%` }} />
         </div>
         <p className="mt-2 text-sm font-bold text-slate-600">{answeredCount}/{quiz?.questions.length ?? 0} answered</p>
       </section>
@@ -76,7 +76,7 @@ export function QuizPage() {
                     key={option}
                     type="button"
                     onClick={() => setAnswers({ ...answers, [question.id]: optionIndex })}
-                    className={`interactive-card rounded-xl border px-4 py-3 text-left text-sm leading-6 ${answers[question.id] === optionIndex ? "border-indigo-500 bg-indigo-50 font-semibold text-indigo-900" : "border-slate-200 bg-white text-slate-700"}`}
+                    className={`interactive-card rounded-[4px] border px-4 py-3 text-left text-sm leading-6 ${answers[question.id] === optionIndex ? "border-[#666666] bg-[#FF5C00]/10 font-semibold text-[#111827]" : "border-slate-200 bg-white text-slate-700"}`}
                   >
                     {option}
                   </button>
@@ -88,12 +88,12 @@ export function QuizPage() {
       )}
 
       <div className="flex flex-wrap gap-3">
-        <button disabled={!quiz || answeredCount < quiz.questions.length} onClick={submit} className="inline-flex items-center gap-2 rounded-xl bg-ink px-5 py-3 text-sm font-black text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300">
+        <button disabled={!quiz || answeredCount < quiz.questions.length} onClick={submit} className="mono-space inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white transition-colors hover:bg-[#E55300] disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-300">
           <CheckCircle size={16} />
           Submit diagnostic
         </button>
         {result && (
-          <button onClick={generateRoadmap} className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-black text-white transition-colors hover:bg-indigo-700">
+          <button onClick={generateRoadmap} className="mono-space inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white transition-colors hover:bg-[#E55300]">
             <Play size={16} />
             Generate career map
           </button>

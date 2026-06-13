@@ -17,14 +17,14 @@ export function AppLayout() {
 
   return (
     <div className="app-surface min-h-screen">
-      <aside className="fixed inset-y-4 left-4 z-10 hidden w-72 rounded-3xl border border-slate-200 bg-white/90 px-4 py-5 shadow-soft backdrop-blur lg:block">
+      <aside className="fixed inset-y-4 left-4 z-10 hidden w-72 rounded-[4px] border-2 border-[#666666] bg-[#F8F9F9]/95 px-4 py-5 shadow-[8px_8px_0_rgba(102,102,102,0.22)] backdrop-blur lg:block">
         <div className="mb-8 flex items-center gap-3 px-2">
-          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-ink text-white">
+          <div className="grid h-11 w-11 place-items-center rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] text-white shadow-[4px_4px_0_rgba(102,102,102,0.22)]">
             <Target size={20} />
           </div>
           <div>
-            <p className="text-sm font-black uppercase tracking-wider text-indigo-700">PathMentor</p>
-            <p className="text-xs text-slate-500">Career learning OS</p>
+            <p className="mono-space text-sm font-black uppercase tracking-wider text-[#FF5C00]">PathMentor</p>
+            <p className="text-xs text-[#4B5563]">Career learning OS</p>
           </div>
         </div>
         <nav className="space-y-1">
@@ -33,8 +33,10 @@ export function AppLayout() {
               key={item.to}
               to={item.to}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-semibold transition-colors ${
-                  isActive ? "bg-ink text-white" : "text-slate-600 hover:bg-slate-100 hover:text-ink"
+                `flex items-center gap-3 rounded-[4px] border-2 px-3 py-2.5 text-sm font-semibold transition-colors ${
+                  isActive
+                    ? "border-[#666666] bg-[#666666] text-white shadow-[4px_4px_0_rgba(17,24,39,0.16)]"
+                    : "border-transparent text-[#4B5563] hover:border-[#666666] hover:bg-[#FF5C00]/10 hover:text-[#111827]"
                 }`
               }
             >
@@ -48,19 +50,19 @@ export function AppLayout() {
             logout();
             navigate("/login");
           }}
-          className="absolute bottom-5 left-4 right-4 flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-3 py-2 text-sm font-semibold text-slate-700 transition-colors hover:bg-slate-50"
+          className="absolute bottom-5 left-4 right-4 flex items-center justify-center gap-2 rounded-[4px] border-2 border-[#666666] bg-white px-3 py-2 text-sm font-semibold text-[#4B5563] transition-colors hover:bg-[#FF5C00]/10 hover:text-[#111827]"
         >
           <LogOut size={16} />
           Sign out
         </button>
       </aside>
       <main className="lg:pl-80">
-        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200 bg-white/80 px-4 backdrop-blur lg:px-8">
+        <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b-2 border-[#666666] bg-[#F8F9F9]/92 px-4 shadow-[0_8px_0_rgba(102,102,102,0.08)] backdrop-blur lg:px-8">
           <div>
-            <p className="text-xs font-bold uppercase text-indigo-700">PathMentor AI</p>
-            <p className="text-sm text-slate-500">{user?.email}</p>
+            <p className="mono-space text-xs font-bold uppercase text-[#FF5C00]">PathMentor AI</p>
+            <p className="text-sm text-[#4B5563]">{user?.email}</p>
           </div>
-          <button onClick={() => navigate("/mentor")} className="rounded-xl bg-indigo-600 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-indigo-700">
+          <button onClick={() => navigate("/mentor")} className="mono-space rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-4 py-2 text-sm font-bold text-white shadow-[4px_4px_0_rgba(102,102,102,0.22)] transition-colors hover:bg-[#E55300]">
             Mentor AI
           </button>
         </header>

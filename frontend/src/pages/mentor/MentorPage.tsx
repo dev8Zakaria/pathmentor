@@ -73,10 +73,10 @@ export function MentorPage() {
       <aside className="panel flex min-h-[320px] flex-col p-4">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-black uppercase text-indigo-700">History</p>
+            <p className="mono-space text-xs font-black uppercase text-[#FF5C00]">History</p>
             <h2 className="text-lg font-black text-ink">Mentor threads</h2>
           </div>
-          <button onClick={startNewConversation} className="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white transition-colors hover:bg-indigo-700" aria-label="New conversation">
+          <button onClick={startNewConversation} className="grid h-10 w-10 place-items-center rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] text-white transition-colors hover:bg-[#E55300]" aria-label="New conversation">
             <Plus size={18} />
           </button>
         </div>
@@ -86,10 +86,10 @@ export function MentorPage() {
             <button
               key={conversation._id}
               onClick={() => openConversation(conversation)}
-              className={`interactive-card w-full rounded-xl border p-3 text-left ${conversationId === conversation._id ? "border-indigo-500 bg-indigo-50" : "border-slate-200 bg-white"}`}
+              className={`interactive-card w-full rounded-[4px] border p-3 text-left ${conversationId === conversation._id ? "border-[#666666] bg-[#FF5C00]/10" : "border-slate-200 bg-white"}`}
             >
               <div className="flex items-start gap-2">
-                <MessageSquare className="mt-0.5 text-indigo-600" size={16} />
+                <MessageSquare className="mt-0.5 text-[#FF5C00]" size={16} />
                 <div className="min-w-0">
                   <p className="truncate text-sm font-black text-ink">{conversation.title || "Mentor conversation"}</p>
                   <p className="mt-1 text-xs text-slate-500">{conversation.messages.length} messages</p>
@@ -102,7 +102,7 @@ export function MentorPage() {
 
       <section className="panel grid min-h-[calc(100vh-7rem)] grid-rows-[auto_1fr_auto] overflow-hidden">
         <header className="border-b border-slate-200 p-5">
-          <p className="flex items-center gap-2 text-sm font-bold uppercase text-indigo-700">
+          <p className="mono-space flex items-center gap-2 text-sm font-bold uppercase text-[#FF5C00]">
             <Sparkles size={16} />
             Mentor AI
           </p>
@@ -115,16 +115,16 @@ export function MentorPage() {
               key={`${item.role}-${index}-${item.createdAt ?? ""}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`max-w-3xl rounded-2xl p-4 text-sm leading-6 ${item.role === "user" ? "ml-auto bg-ink text-white" : "bg-slate-50 text-slate-700"}`}
+              className={`max-w-3xl rounded-[4px] p-4 text-sm leading-6 ${item.role === "user" ? "ml-auto bg-[#666666] text-white" : "bg-slate-50 text-slate-700"}`}
             >
               {item.content.split("\n").map((line, lineIndex) => <p key={`${index}-${lineIndex}`} className="mb-2 last:mb-0">{line}</p>)}
             </motion.div>
           ))}
-          {loading && <p className="rounded-xl bg-indigo-50 p-3 text-sm font-semibold text-indigo-700">The mentor is preparing a contextual answer...</p>}
+          {loading && <p className="rounded-[4px] bg-[#FF5C00]/10 p-3 text-sm font-semibold text-[#E55300]">The mentor is preparing a contextual answer...</p>}
         </div>
         <form onSubmit={submit} className="flex gap-3 border-t border-slate-200 p-4">
-          <input value={message} onChange={(event) => setMessage(event.target.value)} className="focus-ring min-w-0 flex-1 rounded-xl border border-slate-200 px-3 py-3" placeholder="Example: I understand Docker images but not volumes. What should I build next?" />
-          <button className="grid h-12 w-12 place-items-center rounded-xl bg-indigo-600 text-white transition-colors hover:bg-indigo-700" aria-label="Send">
+          <input value={message} onChange={(event) => setMessage(event.target.value)} className="focus-ring min-w-0 flex-1 rounded-[4px] border-2 border-[#666666] px-3 py-3" placeholder="Example: I understand Docker images but not volumes. What should I build next?" />
+          <button className="grid h-12 w-12 place-items-center rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] text-white transition-colors hover:bg-[#E55300]" aria-label="Send">
             <Send size={18} />
           </button>
         </form>

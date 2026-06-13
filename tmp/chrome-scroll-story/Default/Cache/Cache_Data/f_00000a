@@ -1,0 +1,274 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/pages/auth/RegisterPage.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=2cf4814f"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+let prevRefreshReg;
+let prevRefreshSig;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  prevRefreshReg = window.$RefreshReg$;
+  prevRefreshSig = window.$RefreshSig$;
+  window.$RefreshReg$ = RefreshRuntime.getRefreshReg("C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx");
+  window.$RefreshSig$ = RefreshRuntime.createSignatureFunctionForTransform;
+}
+var _s = $RefreshSig$();
+import __vite__cjsImport3_react from "/node_modules/.vite/deps/react.js?v=2cf4814f"; const useState = __vite__cjsImport3_react["useState"];
+import { Link, useNavigate } from "/node_modules/.vite/deps/react-router-dom.js?v=2cf4814f";
+import { useAuth } from "/src/hooks/useAuth.tsx";
+import { AuthShell } from "/src/pages/auth/AuthShell.tsx";
+function FieldHelp({ children }) {
+  return /* @__PURE__ */ jsxDEV("p", { className: "mt-1 text-xs leading-5 text-white/48", children }, void 0, false, {
+    fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+    lineNumber: 26,
+    columnNumber: 10
+  }, this);
+}
+_c = FieldHelp;
+export function RegisterPage() {
+  _s();
+  const { register } = useAuth();
+  const navigate = useNavigate();
+  const [form, setForm] = useState({ fullName: "", email: "", password: "", educationLevel: "", weeklyStudyHours: 6 });
+  const [error, setError] = useState("");
+  async function submit(event) {
+    event.preventDefault();
+    setError("");
+    try {
+      await register(form);
+      navigate("/onboarding");
+    } catch {
+      setError("Sign up failed. Check that your email is valid and your password has at least 8 characters.");
+    }
+  }
+  return /* @__PURE__ */ jsxDEV(AuthShell, { title: "Create a learning profile the mentor can actually use.", subtitle: "We ask for a few study details so your diagnostic, roadmap, and mentor advice are calibrated instead of generic.", children: /* @__PURE__ */ jsxDEV("form", { onSubmit: submit, className: "space-y-5", children: [
+    /* @__PURE__ */ jsxDEV("div", { children: [
+      /* @__PURE__ */ jsxDEV("p", { className: "text-xs font-black uppercase tracking-[0.22em] text-emerald-300", children: "Build the profile" }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 50,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("h2", { className: "mt-2 text-3xl font-black text-white", children: "Create your account" }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 51,
+        columnNumber: 11
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "mt-1 text-sm text-white/60", children: "You will choose your target career on the next screen." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 52,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 49,
+      columnNumber: 9
+    }, this),
+    error && /* @__PURE__ */ jsxDEV("p", { className: "rounded-2xl border border-red-300/25 bg-red-500/12 p-3 text-sm font-semibold text-red-100", children: error }, void 0, false, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 54,
+      columnNumber: 19
+    }, this),
+    /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-bold text-white/80", children: [
+      "Full name",
+      /* @__PURE__ */ jsxDEV(
+        "input",
+        {
+          value: form.fullName,
+          onChange: (event) => setForm({ ...form, fullName: event.target.value }),
+          className: "focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25",
+          placeholder: "Example: Zakaria El Amrani",
+          autoComplete: "name"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+          lineNumber: 58,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(FieldHelp, { children: "Used only to personalize your dashboard and mentor messages." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 65,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 56,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-bold text-white/80", children: [
+      "Email address",
+      /* @__PURE__ */ jsxDEV(
+        "input",
+        {
+          type: "email",
+          value: form.email,
+          onChange: (event) => setForm({ ...form, email: event.target.value }),
+          className: "focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25",
+          placeholder: "you@example.com",
+          autoComplete: "email"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+          lineNumber: 70,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(FieldHelp, { children: "This is your login identifier." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 78,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 68,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-bold text-white/80", children: [
+      "Password",
+      /* @__PURE__ */ jsxDEV(
+        "input",
+        {
+          type: "password",
+          value: form.password,
+          onChange: (event) => setForm({ ...form, password: event.target.value }),
+          className: "focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25",
+          placeholder: "At least 8 characters",
+          autoComplete: "new-password"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+          lineNumber: 83,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(FieldHelp, { children: "Use at least 8 characters. You can improve password rules later for production." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 91,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 81,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-bold text-white/80", children: [
+      "Current education level",
+      /* @__PURE__ */ jsxDEV(
+        "input",
+        {
+          value: form.educationLevel,
+          onChange: (event) => setForm({ ...form, educationLevel: event.target.value }),
+          className: "focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25",
+          placeholder: "Example: 2nd year CS student, self-taught beginner"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+          lineNumber: 96,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(FieldHelp, { children: "This helps the roadmap avoid being too basic or too advanced." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 102,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 94,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("label", { className: "block text-sm font-bold text-white/80", children: [
+      "Weekly study capacity",
+      /* @__PURE__ */ jsxDEV(
+        "input",
+        {
+          type: "number",
+          min: 1,
+          max: 40,
+          value: form.weeklyStudyHours,
+          onChange: (event) => setForm({ ...form, weeklyStudyHours: Number(event.target.value) }),
+          className: "focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25"
+        },
+        void 0,
+        false,
+        {
+          fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+          lineNumber: 107,
+          columnNumber: 11
+        },
+        this
+      ),
+      /* @__PURE__ */ jsxDEV(FieldHelp, { children: "How many focused hours per week you can realistically commit." }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 115,
+        columnNumber: 11
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 105,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("button", { className: "w-full rounded-full bg-indigo-500 px-4 py-3 text-sm font-black text-white shadow-[0_16px_40px_rgba(79,70,229,0.34)] transition-colors hover:bg-indigo-400", children: "Continue to career selection" }, void 0, false, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 118,
+      columnNumber: 9
+    }, this),
+    /* @__PURE__ */ jsxDEV("p", { className: "text-center text-sm text-white/55", children: [
+      "Already registered? ",
+      /* @__PURE__ */ jsxDEV(Link, { to: "/login", className: "font-bold text-emerald-300 hover:text-emerald-200", children: "Sign in" }, void 0, false, {
+        fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+        lineNumber: 122,
+        columnNumber: 31
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+      lineNumber: 121,
+      columnNumber: 9
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+    lineNumber: 48,
+    columnNumber: 7
+  }, this) }, void 0, false, {
+    fileName: "C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx",
+    lineNumber: 47,
+    columnNumber: 5
+  }, this);
+}
+_s(RegisterPage, "FpBZMNXObCnaTH9e747nAhHzJ8c=", false, function() {
+  return [useAuth, useNavigate];
+});
+_c2 = RegisterPage;
+var _c, _c2;
+$RefreshReg$(_c, "FieldHelp");
+$RefreshReg$(_c2, "RegisterPage");
+if (import.meta.hot && !inWebWorker) {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+if (import.meta.hot && !inWebWorker) {
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/zakar/OneDrive/Bureau/travail_scolaire/PathMentor/frontend/src/pages/auth/RegisterPage.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+
+//# sourceMappingURL=data:application/json;base64,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SixNQUFNRSxPQUFPQyxLQUFLLEVBQUUsQ0FBQztBQUFBLFVBQ3RGLFdBQVU7QUFBQTtBQUFBLFFBTlo7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLE1BTW9NO0FBQUEsTUFFcE0sdUJBQUMsYUFBVSw2RUFBWDtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXdFO0FBQUEsU0FWMUU7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQVdBO0FBQUEsSUFFQSx1QkFBQyxZQUFPLFdBQVUsNkpBQTJKLDRDQUE3SztBQUFBO0FBQUE7QUFBQTtBQUFBLFdBRUE7QUFBQSxJQUNBLHVCQUFDLE9BQUUsV0FBVSxxQ0FBbUM7QUFBQTtBQUFBLE1BQzFCLHVCQUFDLFFBQUssSUFBRyxVQUFTLFdBQVUscURBQW9ELHVCQUFoRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQXVGO0FBQUEsU0FEN0c7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUVBO0FBQUEsT0EzRUY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQTRFQSxLQTdFRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBOEVBO0FBRUo7QUFBQ2hCLEdBbEdlRCxjQUFZO0FBQUEsVUFDTEwsU0FDSkQsV0FBVztBQUFBO0FBQUEsTUFGZE07QUFBWSxJQUFBRCxJQUFBb0I7QUFBQSxhQUFBcEIsSUFBQTtBQUFBLGFBQUFvQixLQUFBIiwibmFtZXMiOlsidXNlU3RhdGUiLCJMaW5rIiwidXNlTmF2aWdhdGUiLCJ1c2VBdXRoIiwiQXV0aFNoZWxsIiwiRmllbGRIZWxwIiwiY2hpbGRyZW4iLCJfYyIsIlJlZ2lzdGVyUGFnZSIsIl9zIiwicmVnaXN0ZXIiLCJuYXZpZ2F0ZSIsImZvcm0iLCJzZXRGb3JtIiwiZnVsbE5hbWUiLCJlbWFpbCIsInBhc3N3b3JkIiwiZWR1Y2F0aW9uTGV2ZWwiLCJ3ZWVrbHlTdHVkeUhvdXJzIiwiZXJyb3IiLCJzZXRFcnJvciIsInN1Ym1pdCIsImV2ZW50IiwicHJldmVudERlZmF1bHQiLCJ0YXJnZXQiLCJ2YWx1ZSIsIk51bWJlciIsIl9jMiJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJSZWdpc3RlclBhZ2UudHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IEZvcm1FdmVudCwgdXNlU3RhdGUgfSBmcm9tIFwicmVhY3RcIjtcbmltcG9ydCB7IExpbmssIHVzZU5hdmlnYXRlIH0gZnJvbSBcInJlYWN0LXJvdXRlci1kb21cIjtcbmltcG9ydCB7IHVzZUF1dGggfSBmcm9tIFwiLi4vLi4vaG9va3MvdXNlQXV0aFwiO1xuaW1wb3J0IHsgQXV0aFNoZWxsIH0gZnJvbSBcIi4vQXV0aFNoZWxsXCI7XG5cbmZ1bmN0aW9uIEZpZWxkSGVscCh7IGNoaWxkcmVuIH06IHsgY2hpbGRyZW46IFJlYWN0LlJlYWN0Tm9kZSB9KSB7XG4gIHJldHVybiA8cCBjbGFzc05hbWU9XCJtdC0xIHRleHQteHMgbGVhZGluZy01IHRleHQtd2hpdGUvNDhcIj57Y2hpbGRyZW59PC9wPjtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIFJlZ2lzdGVyUGFnZSgpIHtcbiAgY29uc3QgeyByZWdpc3RlciB9ID0gdXNlQXV0aCgpO1xuICBjb25zdCBuYXZpZ2F0ZSA9IHVzZU5hdmlnYXRlKCk7XG4gIGNvbnN0IFtmb3JtLCBzZXRGb3JtXSA9IHVzZVN0YXRlKHsgZnVsbE5hbWU6IFwiXCIsIGVtYWlsOiBcIlwiLCBwYXNzd29yZDogXCJcIiwgZWR1Y2F0aW9uTGV2ZWw6IFwiXCIsIHdlZWtseVN0dWR5SG91cnM6IDYgfSk7XG4gIGNvbnN0IFtlcnJvciwgc2V0RXJyb3JdID0gdXNlU3RhdGUoXCJcIik7XG5cbiAgYXN5bmMgZnVuY3Rpb24gc3VibWl0KGV2ZW50OiBGb3JtRXZlbnQpIHtcbiAgICBldmVudC5wcmV2ZW50RGVmYXVsdCgpO1xuICAgIHNldEVycm9yKFwiXCIpO1xuICAgIHRyeSB7XG4gICAgICBhd2FpdCByZWdpc3Rlcihmb3JtKTtcbiAgICAgIG5hdmlnYXRlKFwiL29uYm9hcmRpbmdcIik7XG4gICAgfSBjYXRjaCB7XG4gICAgICBzZXRFcnJvcihcIlNpZ24gdXAgZmFpbGVkLiBDaGVjayB0aGF0IHlvdXIgZW1haWwgaXMgdmFsaWQgYW5kIHlvdXIgcGFzc3dvcmQgaGFzIGF0IGxlYXN0IDggY2hhcmFjdGVycy5cIik7XG4gICAgfVxuICB9XG5cbiAgcmV0dXJuIChcbiAgICA8QXV0aFNoZWxsIHRpdGxlPVwiQ3JlYXRlIGEgbGVhcm5pbmcgcHJvZmlsZSB0aGUgbWVudG9yIGNhbiBhY3R1YWxseSB1c2UuXCIgc3VidGl0bGU9XCJXZSBhc2sgZm9yIGEgZmV3IHN0dWR5IGRldGFpbHMgc28geW91ciBkaWFnbm9zdGljLCByb2FkbWFwLCBhbmQgbWVudG9yIGFkdmljZSBhcmUgY2FsaWJyYXRlZCBpbnN0ZWFkIG9mIGdlbmVyaWMuXCI+XG4gICAgICA8Zm9ybSBvblN1Ym1pdD17c3VibWl0fSBjbGFzc05hbWU9XCJzcGFjZS15LTVcIj5cbiAgICAgICAgPGRpdj5cbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJ0ZXh0LXhzIGZvbnQtYmxhY2sgdXBwZXJjYXNlIHRyYWNraW5nLVswLjIyZW1dIHRleHQtZW1lcmFsZC0zMDBcIj5CdWlsZCB0aGUgcHJvZmlsZTwvcD5cbiAgICAgICAgICA8aDIgY2xhc3NOYW1lPVwibXQtMiB0ZXh0LTN4bCBmb250LWJsYWNrIHRleHQtd2hpdGVcIj5DcmVhdGUgeW91ciBhY2NvdW50PC9oMj5cbiAgICAgICAgICA8cCBjbGFzc05hbWU9XCJtdC0xIHRleHQtc20gdGV4dC13aGl0ZS82MFwiPllvdSB3aWxsIGNob29zZSB5b3VyIHRhcmdldCBjYXJlZXIgb24gdGhlIG5leHQgc2NyZWVuLjwvcD5cbiAgICAgICAgPC9kaXY+XG4gICAgICAgIHtlcnJvciAmJiA8cCBjbGFzc05hbWU9XCJyb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXJlZC0zMDAvMjUgYmctcmVkLTUwMC8xMiBwLTMgdGV4dC1zbSBmb250LXNlbWlib2xkIHRleHQtcmVkLTEwMFwiPntlcnJvcn08L3A+fVxuXG4gICAgICAgIDxsYWJlbCBjbGFzc05hbWU9XCJibG9jayB0ZXh0LXNtIGZvbnQtYm9sZCB0ZXh0LXdoaXRlLzgwXCI+XG4gICAgICAgICAgRnVsbCBuYW1lXG4gICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICB2YWx1ZT17Zm9ybS5mdWxsTmFtZX1cbiAgICAgICAgICAgIG9uQ2hhbmdlPXsoZXZlbnQpID0+IHNldEZvcm0oeyAuLi5mb3JtLCBmdWxsTmFtZTogZXZlbnQudGFyZ2V0LnZhbHVlIH0pfVxuICAgICAgICAgICAgY2xhc3NOYW1lPVwiZm9jdXMtcmluZyBtdC0yIHctZnVsbCByb3VuZGVkLTJ4bCBib3JkZXIgYm9yZGVyLXdoaXRlLzE1IGJnLXdoaXRlLzEwIHB4LTQgcHktMyB0ZXh0LXdoaXRlIHBsYWNlaG9sZGVyOnRleHQtd2hpdGUvMzUgc2hhZG93LWlubmVyIG91dGxpbmUtbm9uZSB0cmFuc2l0aW9uLWNvbG9ycyBob3Zlcjpib3JkZXItd2hpdGUvMjVcIlxuICAgICAgICAgICAgcGxhY2Vob2xkZXI9XCJFeGFtcGxlOiBaYWthcmlhIEVsIEFtcmFuaVwiXG4gICAgICAgICAgICBhdXRvQ29tcGxldGU9XCJuYW1lXCJcbiAgICAgICAgICAvPlxuICAgICAgICAgIDxGaWVsZEhlbHA+VXNlZCBvbmx5IHRvIHBlcnNvbmFsaXplIHlvdXIgZGFzaGJvYXJkIGFuZCBtZW50b3IgbWVzc2FnZXMuPC9GaWVsZEhlbHA+XG4gICAgICAgIDwvbGFiZWw+XG5cbiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1ib2xkIHRleHQtd2hpdGUvODBcIj5cbiAgICAgICAgICBFbWFpbCBhZGRyZXNzXG4gICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICB0eXBlPVwiZW1haWxcIlxuICAgICAgICAgICAgdmFsdWU9e2Zvcm0uZW1haWx9XG4gICAgICAgICAgICBvbkNoYW5nZT17KGV2ZW50KSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgZW1haWw6IGV2ZW50LnRhcmdldC52YWx1ZSB9KX1cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImZvY3VzLXJpbmcgbXQtMiB3LWZ1bGwgcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xNSBiZy13aGl0ZS8xMCBweC00IHB5LTMgdGV4dC13aGl0ZSBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzM1IHNoYWRvdy1pbm5lciBvdXRsaW5lLW5vbmUgdHJhbnNpdGlvbi1jb2xvcnMgaG92ZXI6Ym9yZGVyLXdoaXRlLzI1XCJcbiAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwieW91QGV4YW1wbGUuY29tXCJcbiAgICAgICAgICAgIGF1dG9Db21wbGV0ZT1cImVtYWlsXCJcbiAgICAgICAgICAvPlxuICAgICAgICAgIDxGaWVsZEhlbHA+VGhpcyBpcyB5b3VyIGxvZ2luIGlkZW50aWZpZXIuPC9GaWVsZEhlbHA+XG4gICAgICAgIDwvbGFiZWw+XG5cbiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1ib2xkIHRleHQtd2hpdGUvODBcIj5cbiAgICAgICAgICBQYXNzd29yZFxuICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgdHlwZT1cInBhc3N3b3JkXCJcbiAgICAgICAgICAgIHZhbHVlPXtmb3JtLnBhc3N3b3JkfVxuICAgICAgICAgICAgb25DaGFuZ2U9eyhldmVudCkgPT4gc2V0Rm9ybSh7IC4uLmZvcm0sIHBhc3N3b3JkOiBldmVudC50YXJnZXQudmFsdWUgfSl9XG4gICAgICAgICAgICBjbGFzc05hbWU9XCJmb2N1cy1yaW5nIG10LTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMTUgYmctd2hpdGUvMTAgcHgtNCBweS0zIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC13aGl0ZS8zNSBzaGFkb3ctaW5uZXIgb3V0bGluZS1ub25lIHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJvcmRlci13aGl0ZS8yNVwiXG4gICAgICAgICAgICBwbGFjZWhvbGRlcj1cIkF0IGxlYXN0IDggY2hhcmFjdGVyc1wiXG4gICAgICAgICAgICBhdXRvQ29tcGxldGU9XCJuZXctcGFzc3dvcmRcIlxuICAgICAgICAgIC8+XG4gICAgICAgICAgPEZpZWxkSGVscD5Vc2UgYXQgbGVhc3QgOCBjaGFyYWN0ZXJzLiBZb3UgY2FuIGltcHJvdmUgcGFzc3dvcmQgcnVsZXMgbGF0ZXIgZm9yIHByb2R1Y3Rpb24uPC9GaWVsZEhlbHA+XG4gICAgICAgIDwvbGFiZWw+XG5cbiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1ib2xkIHRleHQtd2hpdGUvODBcIj5cbiAgICAgICAgICBDdXJyZW50IGVkdWNhdGlvbiBsZXZlbFxuICAgICAgICAgIDxpbnB1dFxuICAgICAgICAgICAgdmFsdWU9e2Zvcm0uZWR1Y2F0aW9uTGV2ZWx9XG4gICAgICAgICAgICBvbkNoYW5nZT17KGV2ZW50KSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgZWR1Y2F0aW9uTGV2ZWw6IGV2ZW50LnRhcmdldC52YWx1ZSB9KX1cbiAgICAgICAgICAgIGNsYXNzTmFtZT1cImZvY3VzLXJpbmcgbXQtMiB3LWZ1bGwgcm91bmRlZC0yeGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xNSBiZy13aGl0ZS8xMCBweC00IHB5LTMgdGV4dC13aGl0ZSBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzM1IHNoYWRvdy1pbm5lciBvdXRsaW5lLW5vbmUgdHJhbnNpdGlvbi1jb2xvcnMgaG92ZXI6Ym9yZGVyLXdoaXRlLzI1XCJcbiAgICAgICAgICAgIHBsYWNlaG9sZGVyPVwiRXhhbXBsZTogMm5kIHllYXIgQ1Mgc3R1ZGVudCwgc2VsZi10YXVnaHQgYmVnaW5uZXJcIlxuICAgICAgICAgIC8+XG4gICAgICAgICAgPEZpZWxkSGVscD5UaGlzIGhlbHBzIHRoZSByb2FkbWFwIGF2b2lkIGJlaW5nIHRvbyBiYXNpYyBvciB0b28gYWR2YW5jZWQuPC9GaWVsZEhlbHA+XG4gICAgICAgIDwvbGFiZWw+XG5cbiAgICAgICAgPGxhYmVsIGNsYXNzTmFtZT1cImJsb2NrIHRleHQtc20gZm9udC1ib2xkIHRleHQtd2hpdGUvODBcIj5cbiAgICAgICAgICBXZWVrbHkgc3R1ZHkgY2FwYWNpdHlcbiAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgIHR5cGU9XCJudW1iZXJcIlxuICAgICAgICAgICAgbWluPXsxfVxuICAgICAgICAgICAgbWF4PXs0MH1cbiAgICAgICAgICAgIHZhbHVlPXtmb3JtLndlZWtseVN0dWR5SG91cnN9XG4gICAgICAgICAgICBvbkNoYW5nZT17KGV2ZW50KSA9PiBzZXRGb3JtKHsgLi4uZm9ybSwgd2Vla2x5U3R1ZHlIb3VyczogTnVtYmVyKGV2ZW50LnRhcmdldC52YWx1ZSkgfSl9XG4gICAgICAgICAgICBjbGFzc05hbWU9XCJmb2N1cy1yaW5nIG10LTIgdy1mdWxsIHJvdW5kZWQtMnhsIGJvcmRlciBib3JkZXItd2hpdGUvMTUgYmctd2hpdGUvMTAgcHgtNCBweS0zIHRleHQtd2hpdGUgcGxhY2Vob2xkZXI6dGV4dC13aGl0ZS8zNSBzaGFkb3ctaW5uZXIgb3V0bGluZS1ub25lIHRyYW5zaXRpb24tY29sb3JzIGhvdmVyOmJvcmRlci13aGl0ZS8yNVwiXG4gICAgICAgICAgLz5cbiAgICAgICAgICA8RmllbGRIZWxwPkhvdyBtYW55IGZvY3VzZWQgaG91cnMgcGVyIHdlZWsgeW91IGNhbiByZWFsaXN0aWNhbGx5IGNvbW1pdC48L0ZpZWxkSGVscD5cbiAgICAgICAgPC9sYWJlbD5cblxuICAgICAgICA8YnV0dG9uIGNsYXNzTmFtZT1cInctZnVsbCByb3VuZGVkLWZ1bGwgYmctaW5kaWdvLTUwMCBweC00IHB5LTMgdGV4dC1zbSBmb250LWJsYWNrIHRleHQtd2hpdGUgc2hhZG93LVswXzE2cHhfNDBweF9yZ2JhKDc5LDcwLDIyOSwwLjM0KV0gdHJhbnNpdGlvbi1jb2xvcnMgaG92ZXI6YmctaW5kaWdvLTQwMFwiPlxuICAgICAgICAgIENvbnRpbnVlIHRvIGNhcmVlciBzZWxlY3Rpb25cbiAgICAgICAgPC9idXR0b24+XG4gICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtY2VudGVyIHRleHQtc20gdGV4dC13aGl0ZS81NVwiPlxuICAgICAgICAgIEFscmVhZHkgcmVnaXN0ZXJlZD8gPExpbmsgdG89XCIvbG9naW5cIiBjbGFzc05hbWU9XCJmb250LWJvbGQgdGV4dC1lbWVyYWxkLTMwMCBob3Zlcjp0ZXh0LWVtZXJhbGQtMjAwXCI+U2lnbiBpbjwvTGluaz5cbiAgICAgICAgPC9wPlxuICAgICAgPC9mb3JtPlxuICAgIDwvQXV0aFNoZWxsPlxuICApO1xufVxuIl0sImZpbGUiOiJDOi9Vc2Vycy96YWthci9PbmVEcml2ZS9CdXJlYXUvdHJhdmFpbF9zY29sYWlyZS9QYXRoTWVudG9yL2Zyb250ZW5kL3NyYy9wYWdlcy9hdXRoL1JlZ2lzdGVyUGFnZS50c3gifQ==

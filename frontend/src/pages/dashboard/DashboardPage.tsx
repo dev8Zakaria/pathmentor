@@ -32,7 +32,7 @@ export function DashboardPage() {
     <div className="space-y-6">
       <section className="grid gap-5 md:grid-cols-[1.25fr_0.75fr]">
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="panel p-6">
-          <p className="mb-2 flex items-center gap-2 text-sm font-bold uppercase text-indigo-700">
+          <p className="mono-space mb-2 flex items-center gap-2 text-sm font-bold uppercase text-[#FF5C00]">
             <Compass size={16} />
             Student command center
           </p>
@@ -41,11 +41,11 @@ export function DashboardPage() {
             Your dashboard connects career choice, diagnostic evidence, roadmap execution, and mentor history. Start with the missing piece that blocks progress.
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <Link to="/onboarding" className="inline-flex items-center gap-2 rounded-xl bg-ink px-4 py-2.5 text-sm font-bold text-white">
+            <Link to="/onboarding" className="inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-4 py-2.5 text-sm font-bold text-white shadow-[4px_4px_0_rgba(102,102,102,0.18)] transition-colors hover:bg-[#E55300]">
               <Target size={16} />
               Choose objective
             </Link>
-            <Link to="/quiz" className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-bold text-slate-700">
+            <Link to="/quiz" className="inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-white px-4 py-2.5 text-sm font-bold text-[#4B5563] transition-colors hover:bg-[#FF5C00]/10 hover:text-[#111827]">
               <BookOpen size={16} />
               Take diagnostic
             </Link>
@@ -56,8 +56,8 @@ export function DashboardPage() {
             <TrendingUp size={16} />
             Roadmap progress
           </p>
-          <div className="mt-5 grid h-32 place-items-center rounded-2xl bg-indigo-50">
-            <p className="text-5xl font-black text-indigo-700">{roadmap?.progressPercentage ?? 0}%</p>
+          <div className="mt-5 grid h-32 place-items-center rounded-[4px] border-2 border-[#666666] bg-[#FF5C00]/10">
+            <p className="display-space text-5xl font-medium text-[#E55300]">{roadmap?.progressPercentage ?? 0}%</p>
           </div>
           <p className="mt-3 text-sm text-slate-600">Progress is calculated from completed roadmap tasks.</p>
         </motion.div>
@@ -67,7 +67,7 @@ export function DashboardPage() {
         <div className="panel p-5 lg:col-span-2">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-lg font-black text-ink">Next action</h2>
-            <Link to="/roadmap" className="inline-flex items-center gap-1 text-sm font-bold text-indigo-700">
+            <Link to="/roadmap" className="inline-flex items-center gap-1 text-sm font-bold text-[#FF5C00] hover:text-[#E55300]">
               Open career map <ArrowRight size={14} />
             </Link>
           </div>
@@ -91,7 +91,7 @@ export function DashboardPage() {
         <div className="panel p-5">
           <h2 className="mb-4 text-lg font-black text-ink">Mentor AI</h2>
           <p className="text-sm leading-6 text-slate-600">Ask questions tied to your roadmap, blockers, and previous conversation history.</p>
-          <Link to="/mentor" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-bold text-white">
+          <Link to="/mentor" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-[#E55300]">
             <MessageCircle size={16} />
             Open mentor
           </Link>

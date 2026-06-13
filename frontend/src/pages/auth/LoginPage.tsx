@@ -25,22 +25,22 @@ export function LoginPage() {
     <AuthShell title="Navigate your CS career with a plan, not guesswork." subtitle="Diagnose your level, choose a target role, generate a roadmap, and keep every mentor conversation tied to your progress.">
       <form onSubmit={submit} className="space-y-5">
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-300">Continue the route</p>
-          <h2 className="mt-2 text-3xl font-black text-white">Sign in</h2>
-          <p className="mt-1 text-sm text-white/60">Demo account is pre-filled after the seed container runs.</p>
+          <p className="mono-space text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">Continue the route</p>
+          <h2 className="display-space mt-2 text-3xl font-medium text-[#111827]">Sign in</h2>
+          <p className="mt-1 text-sm text-[#4B5563]">Demo account is pre-filled after the seed container runs.</p>
         </div>
         {error && <p className="rounded-2xl border border-red-300/25 bg-red-500/12 p-3 text-sm font-semibold text-red-100">{error}</p>}
-        <label className="block text-sm font-bold text-white/80">
+        <label className="block text-sm font-bold text-[#111827]">
           Email address
-          <input value={email} onChange={(event) => setEmail(event.target.value)} className="focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25" />
+          <input value={email} onChange={(event) => setEmail(event.target.value)} className="focus-ring mt-2 w-full rounded-[4px] border-2 border-[#666666] bg-white px-4 py-3 text-[#111827] placeholder:text-[#4B5563]/55 outline-none transition-colors hover:bg-[#FF5C00]/5" />
         </label>
-        <label className="block text-sm font-bold text-white/80">
+        <label className="block text-sm font-bold text-[#111827]">
           Password
-          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="focus-ring mt-2 w-full rounded-2xl border border-white/15 bg-white/10 px-4 py-3 text-white placeholder:text-white/35 shadow-inner outline-none transition-colors hover:border-white/25" />
+          <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} className="focus-ring mt-2 w-full rounded-[4px] border-2 border-[#666666] bg-white px-4 py-3 text-[#111827] placeholder:text-[#4B5563]/55 outline-none transition-colors hover:bg-[#FF5C00]/5" />
         </label>
-        <button className="w-full rounded-full bg-indigo-500 px-4 py-3 text-sm font-black text-white shadow-[0_16px_40px_rgba(79,70,229,0.34)] transition-colors hover:bg-indigo-400">Sign in</button>
-        <p className="text-center text-sm text-white/55">
-          New here? <Link to="/register" className="font-bold text-emerald-300 hover:text-emerald-200">Create an account</Link>
+        <button className="mono-space w-full rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-4 py-3 text-sm font-black text-white shadow-[5px_5px_0_rgba(102,102,102,0.24)] transition-colors hover:bg-[#E55300]">Sign in</button>
+        <p className="text-center text-sm text-[#4B5563]">
+          New here? <Link to="/register" className="font-bold text-[#FF5C00] hover:text-[#E55300]">Create an account</Link>
         </p>
       </form>
     </AuthShell>
