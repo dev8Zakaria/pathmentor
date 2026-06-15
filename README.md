@@ -19,11 +19,13 @@ Backend: `http://localhost:4000`
 Frontend: `http://localhost:5173`
 Neo4j browser: `http://localhost:7474`
 Mongo Express: `http://localhost:8081`
+Redis Commander: `http://localhost:8082`
 
 Le compose lance:
 
 - MongoDB
 - Redis
+- Redis Commander
 - Neo4j
 - Mongo Express
 - le seed initial MongoDB + Neo4j
@@ -54,6 +56,14 @@ Mongo Express:
 - URL: `http://localhost:8081`
 - User: `admin`
 - Password: `pathmentor`
+
+Redis Commander:
+
+- URL: `http://localhost:8082`
+- User: `admin`
+- Password: `pathmentor`
+
+Do not open `http://localhost:6379` in the browser. Port `6379` is the raw Redis protocol port used by the backend and Redis CLI, not an HTTP web interface.
 
 ## Gemini / LLM
 

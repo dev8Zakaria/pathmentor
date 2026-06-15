@@ -44,7 +44,7 @@ export function AuthShell({ children, title, subtitle }: { children: React.React
             </div>
           </div>
         </div>
-        <div className="max-h-[88vh] overflow-y-auto rounded-[4px] border-2 border-[#666666] bg-[#F8F9F9]/94 p-6 text-[#111827] shadow-[10px_10px_0_rgba(102,102,102,0.26)] backdrop-blur-2xl md:p-8">{children}</div>
+        <div className="auth-form-panel auth-card-scroll max-h-[88vh] overflow-y-auto rounded-[4px] border-2 p-6 md:p-8">{children}</div>
       </motion.div>
     </div>
   );

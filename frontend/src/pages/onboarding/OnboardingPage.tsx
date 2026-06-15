@@ -11,7 +11,14 @@ const fitCopy: Record<string, string[]> = {
   career_frontend_developer: ["You care about product feel", "You enjoy visual detail and accessibility", "You want fast feedback loops"],
   career_backend_developer: ["You like APIs and data flow", "You care about reliability and security", "You enjoy debugging server behavior"],
   career_data_engineer: ["You like data quality and pipelines", "You enjoy SQL/Python", "You care about trustworthy analytics"],
-  career_devops_engineer: ["You like automation and infrastructure", "You enjoy Linux and containers", "You care about uptime and deployment"]
+  career_devops_engineer: ["You like automation and infrastructure", "You enjoy Linux and containers", "You care about uptime and deployment"],
+  career_full_stack_developer: ["You want to ship complete product slices", "You like frontend and backend trade-offs", "You can manage state, APIs, and deployment together"],
+  career_qa_engineer: ["You notice edge cases early", "You like turning risk into repeatable tests", "You care about release confidence"],
+  career_api_platform_engineer: ["You like clean contracts and integrations", "You care about versioning, auth, and observability", "You enjoy designing systems other developers use"],
+  career_cybersecurity_analyst: ["You think in threats and evidence", "You enjoy networks, Linux, and investigation", "You care about reducing real operational risk"],
+  career_machine_learning_engineer: ["You like Python, data, and model behavior", "You want to deploy models as reliable services", "You care about evaluation, drift, and monitoring"],
+  career_mobile_developer: ["You care about polished device experiences", "You like API integration and local state", "You want to ship apps users carry every day"],
+  career_cloud_engineer: ["You like infrastructure design", "You enjoy IAM, networking, and automation", "You care about scalable, observable cloud systems"]
 };
 
 export function OnboardingPage() {

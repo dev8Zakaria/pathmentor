@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import { AxiosError } from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { AuthShell } from "./AuthShell";
@@ -19,8 +20,12 @@ export function RegisterPage() {
     try {
       await register(form);
       navigate("/onboarding");
-    } catch {
-      setError("Sign up failed. Check that your email is valid and your password has at least 8 characters.");
+    } catch (error) {
+      const message =
+        error instanceof AxiosError && typeof error.response?.data?.message === "string"
+          ? error.response.data.message
+          : "Sign up failed. Check that your email is valid and your password has at least 8 characters.";
+      setError(message);
     }
   }
 
@@ -28,11 +33,11 @@ export function RegisterPage() {
     <AuthShell title="Create a learning profile the mentor can actually use." subtitle="We ask for a few study details so your diagnostic, roadmap, and mentor advice are calibrated instead of generic.">
       <form onSubmit={submit} className="space-y-5">
         <div>
-          <p className="mono-space text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">Build the profile</p>
+          <p className="auth-eyebrow mono-space text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">Build the profile</p>
           <h2 className="display-space mt-2 text-3xl font-medium text-[#111827]">Create your account</h2>
           <p className="mt-1 text-sm text-[#4B5563]">You will choose your target career on the next screen.</p>
         </div>
-        {error && <p className="rounded-2xl border border-red-300/25 bg-red-500/12 p-3 text-sm font-semibold text-red-100">{error}</p>}
+        {error && <p className="auth-error rounded-[4px] border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
 
         <label className="block text-sm font-bold text-[#111827]">
           Full name

@@ -25,11 +25,11 @@ export function LoginPage() {
     <AuthShell title="Navigate your CS career with a plan, not guesswork." subtitle="Diagnose your level, choose a target role, generate a roadmap, and keep every mentor conversation tied to your progress.">
       <form onSubmit={submit} className="space-y-5">
         <div>
-          <p className="mono-space text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">Continue the route</p>
+          <p className="auth-eyebrow mono-space text-xs font-black uppercase tracking-[0.22em] text-[#FF5C00]">Continue the route</p>
           <h2 className="display-space mt-2 text-3xl font-medium text-[#111827]">Sign in</h2>
           <p className="mt-1 text-sm text-[#4B5563]">Demo account is pre-filled after the seed container runs.</p>
         </div>
-        {error && <p className="rounded-2xl border border-red-300/25 bg-red-500/12 p-3 text-sm font-semibold text-red-100">{error}</p>}
+        {error && <p className="auth-error rounded-[4px] border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{error}</p>}
         <label className="block text-sm font-bold text-[#111827]">
           Email address
           <input value={email} onChange={(event) => setEmail(event.target.value)} className="focus-ring mt-2 w-full rounded-[4px] border-2 border-[#666666] bg-white px-4 py-3 text-[#111827] placeholder:text-[#4B5563]/55 outline-none transition-colors hover:bg-[#FF5C00]/5" />

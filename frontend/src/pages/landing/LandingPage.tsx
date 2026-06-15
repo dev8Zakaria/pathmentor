@@ -51,11 +51,11 @@ export function LandingPage() {
     if (!heroRef.current) return;
 
     const context = gsap.context(() => {
-      gsap.fromTo("[data-cinema-line]", { y: 36 }, { y: 0, duration: 0.85, stagger: 0.07, ease: "power3.out" });
-      gsap.fromTo("[data-credit]", { opacity: 0, y: -12 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.08, delay: 0.2, ease: "power2.out" });
-      gsap.fromTo("[data-story-card]", { y: 28 }, { y: 0, duration: 1, stagger: 0.12, ease: "power3.out" });
-      gsap.to("[data-rail]", { xPercent: -18, duration: 18, repeat: -1, yoyo: true, ease: "sine.inOut" });
-      gsap.to("[data-scan]", { xPercent: 110, duration: 3.8, repeat: -1, ease: "power1.inOut" });
+      gsap.set("[data-cinema-line], [data-credit], [data-rail], [data-scan]", { force3D: true });
+      gsap.fromTo("[data-cinema-line]", { y: 36 }, { y: 0, duration: 0.85, stagger: 0.07, ease: "power3.out", force3D: true });
+      gsap.fromTo("[data-credit]", { autoAlpha: 0, y: -12 }, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.08, delay: 0.2, ease: "power2.out", force3D: true });
+      gsap.to("[data-rail]", { xPercent: -18, duration: 18, repeat: -1, yoyo: true, ease: "sine.inOut", force3D: true });
+      gsap.to("[data-scan]", { xPercent: 110, duration: 3.8, repeat: -1, ease: "power1.inOut", force3D: true });
     }, heroRef);
 
     return () => context.revert();
@@ -64,7 +64,7 @@ export function LandingPage() {
   return (
     <main className="cinematic-landing min-h-screen overflow-hidden bg-[#F8F9F9] text-[#111827]" ref={heroRef}>
       <section className="relative min-h-[94vh] overflow-hidden">
-        <img src={heroImage} alt="Student reviewing a cinematic PathMentor career roadmap workspace" className="absolute inset-0 h-full w-full object-cover object-center" />
+        <img src={heroImage} alt="Student reviewing a cinematic PathMentor career roadmap workspace" className="absolute inset-0 h-full w-full object-cover object-center" loading="eager" decoding="async" fetchPriority="high" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_38%,rgba(255,92,0,0.08),transparent_22rem),linear-gradient(90deg,rgba(17,24,39,0.97)_0%,rgba(17,24,39,0.80)_36%,rgba(17,24,39,0.34)_67%,rgba(17,24,39,0.72)_100%)]" />
         <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.78)_0%,rgba(2,6,23,0.12)_40%,rgba(2,6,23,0.94)_100%)]" />
         <div data-scan className="absolute inset-y-0 left-[-30%] w-1/3 rotate-12 bg-gradient-to-r from-transparent via-white/10 to-transparent blur-sm" />
@@ -251,7 +251,7 @@ export function LandingPage() {
       </section>
 
       <section className="relative min-h-[70vh] overflow-hidden bg-[#111827] px-5 py-20 lg:px-8">
-        <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" />
+        <img src={heroImage} alt="" className="absolute inset-0 h-full w-full object-cover opacity-25" loading="lazy" decoding="async" />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,6,23,0.96),rgba(2,6,23,0.68)),linear-gradient(180deg,rgba(2,6,23,0.2),rgba(2,6,23,0.95))]" />
         <div className="relative mx-auto max-w-[1520px]">
           <motion.div

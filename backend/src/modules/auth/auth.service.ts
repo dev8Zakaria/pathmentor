@@ -6,6 +6,10 @@ import { User } from "../users/user.model";
 import { Profile } from "../users/profile.model";
 import { AppError } from "../../utils/errors";
 
+function normalizeEmail(email: string) {
+  return email.trim().toLowerCase();
+}
+
 function signTokens(userId: string) {
   const accessToken = jwt.sign({}, env.JWT_ACCESS_SECRET, { subject: userId, expiresIn: "20m" });
   const refreshToken = jwt.sign({}, env.JWT_REFRESH_SECRET, { subject: userId, expiresIn: "7d" });
@@ -19,17 +23,24 @@ export async function registerUser(input: {
   educationLevel?: string;
   weeklyStudyHours?: number;
 }) {
-  const existing = await User.findOne({ email: input.email.toLowerCase() });
+  const email = normalizeEmail(input.email);
+  const existing = await User.findOne({ email });
   if (existing) throw new AppError(409, "Email already registered");
 
-  const passwordHash = await bcrypt.hash(input.password, 12);
-  const user = await User.create({ email: input.email, passwordHash, role: "STUDENT" });
-  await Profile.create({
-    userId: user._id,
-    fullName: input.fullName,
-    educationLevel: input.educationLevel ?? "",
-    weeklyStudyHours: input.weeklyStudyHours ?? 6
-  });
+  let user;
+  try {
+    const passwordHash = await bcrypt.hash(input.password, 12);
+    user = await User.create({ email, passwordHash, role: "STUDENT" });
+    await Profile.create({
+      userId: user._id,
+      fullName: input.fullName.trim(),
+      educationLevel: input.educationLevel?.trim() ?? "",
+      weeklyStudyHours: input.weeklyStudyHours ?? 6
+    });
+  } catch (error) {
+    if (isDuplicateKeyError(error)) throw new AppError(409, "Email already registered");
+    throw error;
+  }
 
   const tokens = signTokens(user._id.toString());
   await safeRedisSet(`refresh:user:${user._id}`, tokens.refreshToken, 60 * 60 * 24 * 7);
@@ -37,7 +48,7 @@ export async function registerUser(input: {
 }
 
 export async function loginUser(email: string, password: string) {
-  const user = await User.findOne({ email: email.toLowerCase() });
+  const user = await User.findOne({ email: normalizeEmail(email) });
   if (!user) throw new AppError(401, "Invalid credentials");
 
   const valid = await bcrypt.compare(password, user.passwordHash);
@@ -56,4 +67,8 @@ export function refreshAccessToken(refreshToken: string) {
   return {
     accessToken: jwt.sign({}, env.JWT_ACCESS_SECRET, { subject: payload.sub, expiresIn: "20m" })
   };
+}
+
+function isDuplicateKeyError(error: unknown) {
+  return typeof error === "object" && error !== null && "code" in error && error.code === 11000;
 }

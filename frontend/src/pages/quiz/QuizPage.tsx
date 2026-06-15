@@ -1,14 +1,18 @@
-import { CheckCircle, GraduationCap, Play, Target } from "lucide-react";
+import { CheckCircle, GraduationCap, Loader2, Play, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../services/api";
 import type { Profile, Quiz } from "../../types";
 
 export function QuizPage() {
+  const navigate = useNavigate();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [result, setResult] = useState<{ score: number; strengths: string[]; weaknesses: string[] } | null>(null);
+  const [generatingRoadmap, setGeneratingRoadmap] = useState(false);
+  const [generationError, setGenerationError] = useState("");
 
   useEffect(() => {
     api.get("/users/me/profile").then((profileResponse) => {
@@ -31,8 +35,15 @@ export function QuizPage() {
   }
 
   async function generateRoadmap() {
-    await api.post("/roadmaps/generate");
-    window.location.href = "/roadmap";
+    setGenerationError("");
+    setGeneratingRoadmap(true);
+    try {
+      await api.post("/roadmaps/generate");
+      navigate("/roadmap");
+    } catch {
+      setGenerationError("Roadmap generation failed. Check your connection and try again.");
+      setGeneratingRoadmap(false);
+    }
   }
 
   if (!profile?.targetCareerId) {
@@ -93,12 +104,21 @@ export function QuizPage() {
           Submit diagnostic
         </button>
         {result && (
-          <button onClick={generateRoadmap} className="mono-space inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white transition-colors hover:bg-[#E55300]">
-            <Play size={16} />
-            Generate career map
+          <button disabled={generatingRoadmap} onClick={generateRoadmap} className="mono-space inline-flex items-center gap-2 rounded-[4px] border-2 border-[#666666] bg-[#FF5C00] px-5 py-3 text-sm font-black text-white transition-colors hover:bg-[#E55300] disabled:cursor-wait disabled:bg-[#FF5C00]/70">
+            {generatingRoadmap ? <Loader2 size={16} className="animate-spin" /> : <Play size={16} />}
+            {generatingRoadmap ? "Generating roadmap..." : "Generate career map"}
           </button>
         )}
       </div>
+
+      {generatingRoadmap && (
+        <div className="panel flex items-center gap-3 p-4 text-sm font-bold text-[#4B5563]">
+          <Loader2 className="shrink-0 animate-spin text-[#FF5C00]" size={18} />
+          Building your roadmap from your objective, diagnostic results, and skill gaps. You will be sent to the career map when it is ready.
+        </div>
+      )}
+
+      {generationError && <p className="rounded-[4px] border border-red-200 bg-red-50 p-3 text-sm font-semibold text-red-700">{generationError}</p>}
 
       {result && (
         <div className="panel p-5">
